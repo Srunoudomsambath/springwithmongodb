@@ -1,0 +1,9 @@
+spring:
+  application:
+      name: itpmongodb
+  mongodb:
+    host: localhost:27168
+    username: istad
+    password: qwerqwer
+    database: itpdb
+    authentication-database: admin
