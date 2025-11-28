@@ -1,6 +1,9 @@
-package co.istad.itpmongodb;
+package co.istad.itpmongodb.controller;
 
 
+import co.istad.itpmongodb.domain.User;
+import co.istad.itpmongodb.repository.UserRepository;
+import co.istad.itpmongodb.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

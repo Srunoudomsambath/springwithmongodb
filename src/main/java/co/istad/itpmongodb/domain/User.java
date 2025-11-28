@@ -1,4 +1,4 @@
-package co.istad.itpmongodb;
+package co.istad.itpmongodb.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

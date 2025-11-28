@@ -1,19 +1,30 @@
-package co.istad.itpmongodb;
+package co.istad.itpmongodb.service;
 
 
+import co.istad.itpmongodb.domain.User;
+import co.istad.itpmongodb.dto.UserResponse;
+import co.istad.itpmongodb.mapper.UserMapper;
+import co.istad.itpmongodb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<UserResponse> findAll() {
+        List<User> users = userRepository.findAll();
+        // we use dto of user response so we need to map dto to the domain
+        return users.stream()
+                .map(userMapper :: toUserResponse)
+                .toList();
     }
 
     @Override

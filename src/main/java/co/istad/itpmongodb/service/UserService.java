@@ -1,10 +1,13 @@
-package co.istad.itpmongodb;
+package co.istad.itpmongodb.service;
+
+import co.istad.itpmongodb.domain.User;
+import co.istad.itpmongodb.dto.UserResponse;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<User> findAll();
+    List<UserResponse> findAll();
     User findById(String id);
     User createUser(User user);
     User updateUser(String id , User user);
