@@ -7,7 +7,9 @@ import co.istad.itpmongodb.mapper.UserMapper;
 import co.istad.itpmongodb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -28,9 +30,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(String id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found!"));
+    public UserResponse findById(String id) {
+        return userRepository.findById(id).map(userMapper::toUserResponse)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User with id %s not found", id)));
     }
 
     @Override
@@ -38,14 +40,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    @Override
-    public User updateUser(String id, User user) {
-        User existingUser = findById(id);
-        existingUser.setName(user.getName());
-        existingUser.setEmail(user.getEmail());
-        existingUser.setUsername(user.getUsername());
-        return userRepository.save(existingUser);
-    }
+//    @Override
+//    public User updateUser(String id, User user) {
+//        User existingUser = findById(id);
+//        existingUser.setName(user.getName());
+//        existingUser.setEmail(user.getEmail());
+//        existingUser.setUsername(user.getUsername());
+//        return userRepository.save(existingUser);
+//    }
 
     @Override
     public void deleteUserById(String id) {

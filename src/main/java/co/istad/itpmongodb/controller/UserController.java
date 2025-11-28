@@ -2,6 +2,7 @@ package co.istad.itpmongodb.controller;
 
 
 import co.istad.itpmongodb.domain.User;
+import co.istad.itpmongodb.dto.UserResponse;
 import co.istad.itpmongodb.repository.UserRepository;
 import co.istad.itpmongodb.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User findById(@PathVariable String id) {
+    public UserResponse findById(@PathVariable String id) {
         return userServiceImpl.findById(id);
     }
     @GetMapping("/name-only")
@@ -48,10 +49,10 @@ public class UserController {
     public User createUser(@RequestBody User user){
         return userServiceImpl.createUser(user);
     }
-    @PutMapping("/{id}")
-    public User updateUser(@PathVariable String id, @RequestBody User user){
-        return userServiceImpl.updateUser(id, user);
-    }
+//    @PutMapping("/{id}")
+//    public User updateUser(@PathVariable String id, @RequestBody User user){
+//        return userServiceImpl.updateUser(id, user);
+//    }
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable String id){
         userServiceImpl.deleteUserById(id);

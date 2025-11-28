@@ -8,9 +8,9 @@ import java.util.List;
 public interface UserService {
 
     List<UserResponse> findAll();
-    User findById(String id);
+    UserResponse findById(String id);
     User createUser(User user);
-    User updateUser(String id , User user);
+//    User updateUser(String id , User user);
     void deleteUserById(String id);
     List<User> searchUserByName(String name);
     List<User> findByName(String name);
