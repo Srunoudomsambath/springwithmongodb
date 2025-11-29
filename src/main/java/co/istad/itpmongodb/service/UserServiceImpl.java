@@ -12,64 +12,83 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class UserServiceImpl implements UserService {
+
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
     @Override
     public List<UserResponse> findAll() {
-        List<User> users = userRepository.findAll();
-        // we use dto of user response so we need to map dto to the domain
-        return users.stream()
-                .map(userMapper :: toUserResponse)
+        return userRepository.findAll()
+                .stream()
+                .map(userMapper::toUserResponse)
                 .toList();
     }
 
     @Override
     public UserResponse findById(String id) {
-        return userRepository.findById(id).map(userMapper::toUserResponse)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User with id %s not found", id)));
+        return userRepository.findById(id)
+                .map(userMapper::toUserResponse)
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                "User with id " + id + " not found"));
     }
 
     @Override
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public UserResponse createUser(User user) {
+        User saved = userRepository.save(user);
+        return userMapper.toUserResponse(saved);
     }
 
-//    @Override
-//    public User updateUser(String id, User user) {
-//        User existingUser = findById(id);
-//        existingUser.setName(user.getName());
-//        existingUser.setEmail(user.getEmail());
-//        existingUser.setUsername(user.getUsername());
-//        return userRepository.save(existingUser);
-//    }
+    @Override
+    public UserResponse updateUser(String id, User user) {
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                "User with id " + id + " not found"));
+
+        existingUser.setName(user.getName());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setUsername(user.getUsername());
+
+        User updated = userRepository.save(existingUser);
+        return userMapper.toUserResponse(updated);
+    }
 
     @Override
     public void deleteUserById(String id) {
+        boolean exists = userRepository.existsById(id);
+        if (!exists)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "User with id " + id + " not found");
+
         userRepository.deleteById(id);
-
-    }
-
-
-    @Override
-    public List<User> searchUserByName(String name) {
-        return userRepository.findByNameContainingIgnoreCase(name);
     }
 
     @Override
-    public List<User> findByName(String name) {
-        return userRepository.findByName(name);
+    public List<UserResponse> searchUserByName(String name) {
+        return userRepository.findByNameContainingIgnoreCase(name)
+                .stream()
+                .map(userMapper::toUserResponse)
+                .toList();
     }
 
     @Override
-    public List<User> filterUserByName(String name) {
-        return userRepository.filterNameByTitle(name);
+    public List<UserResponse> findByName(String name) {
+        return userRepository.findByName(name)
+                .stream()
+                .map(userMapper::toUserResponse)
+                .toList();
     }
 
-
+    @Override
+    public List<UserResponse> filterUserByName(String name) {
+        return userRepository.filterNameByTitle(name)
+                .stream()
+                .map(userMapper::toUserResponse)
+                .toList();
+    }
 }

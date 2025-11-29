@@ -16,45 +16,44 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000") // allow your Next.js frontend
 public class UserController {
     private final UserRepository userRepository;
-    private final UserServiceImpl userServiceImpl;
+    private final UserServiceImpl userService;
     @GetMapping
-    public List<User> findAll()  {
-        List<User> users = userRepository.findAll();
-//        for (User u : users) {
-//            Thread.sleep(1000); // 1 second per user
-//        }
-        return users;
+    public List<UserResponse> findAll()  {
+        return userService.findAll();
     }
 
     @GetMapping("/{id}")
     public UserResponse findById(@PathVariable String id) {
-        return userServiceImpl.findById(id);
+        return userService.findById(id);
     }
+
     @GetMapping("/name-only")
-    public List<User> findByName(@RequestParam String name){
-        return userServiceImpl.findByName(name);
+    public List<UserResponse> findByName(@RequestParam String name){
+        return userService.findByName(name);
     }
 
     @GetMapping("/filter")
-    public List<User> filterUserByName(@RequestParam String name){
-        return userServiceImpl.filterUserByName(name);
+    public List<UserResponse> filterUserByName(@RequestParam String name){
+        return userService.filterUserByName(name);
     }
 
     @GetMapping("/search")
-    public List<User> searchByName(@RequestParam String name){
-        return userServiceImpl.searchUserByName(name);
+    public List<UserResponse> searchByName(@RequestParam String name){
+        return userService.searchUserByName(name);
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user){
-        return userServiceImpl.createUser(user);
+    public UserResponse createUser(@RequestBody User user){
+        return userService.createUser(user);
     }
-//    @PutMapping("/{id}")
-//    public User updateUser(@PathVariable String id, @RequestBody User user){
-//        return userServiceImpl.updateUser(id, user);
-//    }
+
+    @PutMapping("/{id}")
+    public UserResponse updateUser(@PathVariable String id, @RequestBody User user){
+        return userService.updateUser(id, user);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable String id){
-        userServiceImpl.deleteUserById(id);
+        userService.deleteUserById(id);
     }
 }

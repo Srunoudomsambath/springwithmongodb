@@ -9,11 +9,10 @@ public interface UserService {
 
     List<UserResponse> findAll();
     UserResponse findById(String id);
-    User createUser(User user);
-//    User updateUser(String id , User user);
+    UserResponse createUser(User user);
+    UserResponse updateUser(String id, User user);
     void deleteUserById(String id);
-    List<User> searchUserByName(String name);
-    List<User> findByName(String name);
-    List<User> filterUserByName(String name);
-
+    List<UserResponse> searchUserByName(String name);
+    List<UserResponse> findByName(String name);
+    List<UserResponse> filterUserByName(String name);
 }
