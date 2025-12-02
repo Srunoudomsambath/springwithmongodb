@@ -18,8 +18,12 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserServiceImpl userService;
     @GetMapping
-    public List<UserResponse> findAll()  {
-        return userService.findAll();
+    public List<UserResponse> findAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id,asc") String[] sort
+    )  {
+        return userService.findAll(page,size,sort);
     }
 
     @GetMapping("/{id}")

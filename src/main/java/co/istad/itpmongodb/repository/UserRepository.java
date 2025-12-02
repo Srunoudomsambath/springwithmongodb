@@ -18,4 +18,8 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     @Query(value = "{name: {$eq: ?0}}",fields = "{name: 1}")
     List<User> findByName(String name);
+
+    @Query("{$and: [{city: ?0}, {age: {$lte: ?1}}]}")
+    List<User> filterByCity(String city,Integer age);
+
 }

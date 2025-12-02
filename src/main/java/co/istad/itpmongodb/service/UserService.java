@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
 
-    List<UserResponse> findAll();
+    List<UserResponse> findAll(int page, int size, String[] sort);
     UserResponse findById(String id);
     UserResponse createUser(User user);
     UserResponse updateUser(String id, User user);
@@ -15,4 +15,5 @@ public interface UserService {
     List<UserResponse> searchUserByName(String name);
     List<UserResponse> findByName(String name);
     List<UserResponse> filterUserByName(String name);
+    List<UserResponse> filterByAge(String city, Integer age);
 }
