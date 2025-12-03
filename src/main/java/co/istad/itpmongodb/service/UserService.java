@@ -1,12 +1,16 @@
 package co.istad.itpmongodb.service;
 
 import co.istad.itpmongodb.domain.User;
+import co.istad.itpmongodb.dto.FilterDto;
 import co.istad.itpmongodb.dto.UserResponse;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface UserService {
 
+
+    Page<UserResponse> filterUsers(FilterDto filter,int page,int size);
     List<UserResponse> findAll(int page, int size, String[] sort);
     UserResponse findById(String id);
     UserResponse createUser(User user);

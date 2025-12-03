@@ -2,10 +2,12 @@ package co.istad.itpmongodb.controller;
 
 
 import co.istad.itpmongodb.domain.User;
+import co.istad.itpmongodb.dto.FilterDto;
 import co.istad.itpmongodb.dto.UserResponse;
 import co.istad.itpmongodb.repository.UserRepository;
 import co.istad.itpmongodb.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +19,17 @@ import java.util.List;
 public class UserController {
     private final UserRepository userRepository;
     private final UserServiceImpl userService;
+
+    @PostMapping("/filter")
+    public Page<UserResponse> filterUsers(
+            @RequestBody FilterDto filter,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+            ){
+        return userService.filterUsers(filter,page,size);
+
+    }
+
     @GetMapping
     public List<UserResponse> findAll(
             @RequestParam(defaultValue = "0") int page,

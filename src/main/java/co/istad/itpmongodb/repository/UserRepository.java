@@ -1,6 +1,7 @@
 package co.istad.itpmongodb.repository;
 
 import co.istad.itpmongodb.domain.User;
+import co.istad.itpmongodb.filter.FilterableRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,7 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends MongoRepository<User, String> {
+public interface UserRepository extends MongoRepository<User, String> ,
+        FilterableRepository<User> {
 
     //derived query
     List<User> findByNameContainingIgnoreCase(String name);
