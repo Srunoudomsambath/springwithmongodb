@@ -11,7 +11,7 @@ public interface UserService {
 
 
     Page<UserResponse> filterUsers(FilterDto filter,int page,int size);
-    List<UserResponse> findAll(int page, int size, String[] sort);
+    Page<UserResponse> findAll(int page, int size);
     UserResponse findById(String id);
     UserResponse createUser(User user);
     UserResponse updateUser(String id, User user);
