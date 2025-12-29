@@ -31,12 +31,11 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserResponse> findAll(
+    public Page<UserResponse> findAll(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "id,asc") String[] sort
+            @RequestParam(defaultValue = "10") int size
     )  {
-        return userService.findAll(page,size,sort);
+        return userService.findAll(page,size);
     }
 
     @GetMapping("/{id}")

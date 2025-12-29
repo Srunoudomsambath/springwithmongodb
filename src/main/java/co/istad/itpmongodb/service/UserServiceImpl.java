@@ -38,16 +38,12 @@ public class UserServiceImpl implements UserService {
         }
 
     @Override
-    public List<UserResponse> findAll(int page, int size, String[] sort) {
+    public Page<UserResponse> findAll(int page, int size) {
         // handle sorting
-        Sort.Direction direction = Sort.Direction.fromString(sort[1]);
-        Sort sortOrder = Sort.by(direction, sort[0]);
-
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sort[0]));
-        return userRepository.findAll(pageable)
-                .stream()
-                .map(userMapper::toUserResponse)
-                .toList();
+        Sort sortByName = Sort.by(Sort.Direction.ASC, "name");
+        Pageable pageable = PageRequest.of(page, size, sortByName);
+        Page<User> users = userRepository.findAll(pageable);
+        return users.map(userMapper::toUserResponse);
     }
 
     @Override
