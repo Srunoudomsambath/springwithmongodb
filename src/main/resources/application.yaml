@@ -7,3 +7,5 @@ spring:
     password: qwerqwer
     database: itpdb
     authentication-database: admin
+server:
+  port: 7999
